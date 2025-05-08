@@ -9,7 +9,12 @@ def api_root(request, format=None):
     if request.method == 'POST':
         return Response({"message": "POST request received"}, status=status.HTTP_201_CREATED)
 
-    base_url = 'http://localhost:8000/'
+    # Detect host for codespace or localhost
+    host = request.get_host()
+    if 'turbo-cod-7vgr57vxwwhprrv-8000.app.github.dev' in host:
+        base_url = 'https://turbo-cod-7vgr57vxwwhprrv-8000.app.github.dev/'
+    else:
+        base_url = 'http://localhost:8000/'
     return Response({
         'users': base_url + 'api/users/?format=api',
         'teams': base_url + 'api/teams/?format=api',
